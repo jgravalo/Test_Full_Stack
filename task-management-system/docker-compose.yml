@@ -1,0 +1,86 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: tms_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: tms_redis
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: ./django_backend
+      dockerfile: Dockerfile
+    container_name: tms_web
+    command: ["/app/scripts/entrypoint.sh", "web"]
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./django_backend:/app
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/healthz || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  worker:
+    build:
+      context: ./django_backend
+      dockerfile: Dockerfile
+    container_name: tms_worker
+    command: ["/app/scripts/entrypoint.sh", "worker"]
+    env_file: .env
+    depends_on:
+      web:
+        condition: service_started
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    volumes:
+      - ./django_backend:/app
+
+  beat:
+    build:
+      context: ./django_backend
+      dockerfile: Dockerfile
+    container_name: tms_beat
+    command: ["/app/scripts/entrypoint.sh", "beat"]
+    env_file: .env
+    depends_on:
+      worker:
+        condition: service_started
+    volumes:
+      - ./django_backend:/app
+
+volumes:
+  pgdata:
