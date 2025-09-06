@@ -1,0 +1,17 @@
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MTkyNTQwLCJpYXQiOjE3NTcxOTIyNDAsImp0aSI6ImNjMjk0Y2FhMzQyOTRiMzM4MjM1ZGRlYmJhMjZkMGRhIiwidXNlcl9pZCI6IjEifQ.Iuv_kvPHZIEij0t0YtbjYuk_NuB_l8IJF8OF9LHbX6s
+
+ver tu usuario actual
+{"id":1,"username":"root","email":"jesus.gravalos@outlook.com"}
+
+crear una tarea
+{"id":4,"title":"primera tarea","description":"aprender django con docker","is_done":false,"created_at":"2025-09-06T22:57:20.708416+02:00","updated_at":"2025-09-06T22:57:20.708457+02:00"}
+
+listar todas las tareas
+[{"id":1,"title":"primera tarea","description":"actualizada","is_done":true,"created_at":"2025-09-06T22:52:05.040727+02:00","updated_at":"2025-09-06T22:56:41.827651+02:00"},{"id":2,"title":"primera tarea","description":"aprender django con docker","is_done":false,"created_at":"2025-09-06T22:52:53.301491+02:00","updated_at":"2025-09-06T22:52:53.301514+02:00"},{"id":3,"title":"primera tarea","description":"aprender django con docker","is_done":false,"created_at":"2025-09-06T22:56:41.629320+02:00","updated_at":"2025-09-06T22:56:41.629361+02:00"},{"id":4,"title":"primera tarea","description":"aprender django con docker","is_done":false,"created_at":"2025-09-06T22:57:20.708416+02:00","updated_at":"2025-09-06T22:57:20.708457+02:00"}]
+
+ver la tarea con id 1
+{"id":1,"title":"primera tarea","description":"actualizada","is_done":true,"created_at":"2025-09-06T22:52:05.040727+02:00","updated_at":"2025-09-06T22:56:41.827651+02:00"}
+
+actualizar la tarea con id 1
+{"id":1,"title":"primera tarea","description":"actualizada","is_done":true,"created_at":"2025-09-06T22:52:05.040727+02:00","updated_at":"2025-09-06T22:57:20.922152+02:00"}
+

@@ -16,7 +16,7 @@ down:
 clean:
 	$(COMPOSE) down -v --remove-orphans
 
-fclean:
+fclean: clean
 		@echo "Deteniendo y eliminando contenedores..."
 	# docker compose --env-file $(ENV_FILE) -f docker-compose.yml down
 	@if [ ! -z "$$(docker ps -aq)" ]; then \
