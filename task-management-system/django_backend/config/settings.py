@@ -113,10 +113,25 @@ REST_FRAMEWORK = {
 
 
 # --- celery (broker/result via redis) ---
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://redis:6379/1")
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", "redis://redis:6379/2")
+# CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://redis:6379/1")
+# CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", "redis://redis:6379/2")
 # si quieres dejarlo explícito (opcional):
 # CELERY_BEAT_SCHEDULER = "celery.beat:PersistentScheduler"
+#
+CELERY_BROKER_URL = "redis://redis:6379/1"
+CELERY_RESULT_BACKEND = "redis://redis:6379/2"
+CELERY_TIMEZONE = "Europe/Madrid"
+CELERY_ENABLE_UTC = False
+
+# from celery.schedules import crontab  # opcional si usas crontab
+
+CELERY_BEAT_SCHEDULE = {
+    "log-pending-tasks-each-minute": {
+        "task": "apps.tasks.tasks.log_pending_tasks",
+        "schedule": 60.0,  # cada 60s (para demo)
+    },
+}
+#
 
 # --- otros ---
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

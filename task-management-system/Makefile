@@ -54,4 +54,4 @@ reset:
 	$(COMPOSE) down -v
 	$(COMPOSE) up --build -d
 
-re: clean up
+re: fclean up
