@@ -31,7 +31,7 @@ Includes **JWT authentication**, background and scheduled task execution, and a 
 
    ```bash
    git clone <repo-url>
-   cd task-management-system
+   cd <repo-name>
    ```
 
 2. Configure environment variables:  
@@ -166,10 +166,10 @@ uppercase_title.delay(task.id)
 
 ## 🧪 Tests
 
-Run tests:
+Simple test for shell:
 
 ```bash
-docker-compose exec web python manage.py test -v 2
+sh tests.sh
 ```
 
 ---
@@ -181,16 +181,16 @@ With `docker-compose`:
 ```bash
 docker-compose up -d        # start
 docker-compose down         # stop
-docker-compose logs -f web  # Django logs
+docker-compose logs -f <service-name>  # Django logs
 ```
 
 With `Makefile` (if available):
 
 ```bash
 make up
+make ls
 make down
 make migrate
-make testv
 ```
 
 ---
