@@ -168,6 +168,14 @@ task = Task.objects.first()
 uppercase_title.delay(task.id)
 ```
 
+If there aren't tasks, it will shows this traceback:
+
+```shell
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'NoneType' object has no attribute 'id'
+```
+
 ---
 
 ## 🧪 Tests
