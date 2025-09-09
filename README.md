@@ -89,6 +89,12 @@ Available services:
 
 ## 🔑 Authentication
 
+Create a superuser:
+
+```bash
+make createsuperuser
+```
+
 Get token:
 
 ```bash
