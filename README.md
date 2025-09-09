@@ -1,48 +1,48 @@
 # 📝 Task Management System
 
-Sistema de gestión de tareas desarrollado con **Django REST Framework**, **PostgreSQL**, **Redis** y **Celery**.  
-Incluye autenticación mediante **JWT**, ejecución de tareas en segundo plano y programadas, y una arquitectura lista para despliegue en contenedores Docker.
+Task management system built with **Django REST Framework**, **PostgreSQL**, **Redis**, and **Celery**.  
+Includes **JWT authentication**, background and scheduled task execution, and a fully containerized architecture ready for deployment.
 
 ---
 
-## 🚀 Características principales
+## 🚀 Key Features
 
-- **API REST** para gestión de usuarios y tareas.
-- **Autenticación JWT** con SimpleJWT.
-- **Celery + Redis** para procesamiento en segundo plano y ejecución periódica.
-- **PostgreSQL** como base de datos relacional.
-- Entorno completamente **dockerizado**.
-- Scripts y `Makefile` para simplificar comandos frecuentes.
-- Tests automatizados con Django.
+- **REST API** for user and task management.
+- **JWT Authentication** with SimpleJWT.
+- **Celery + Redis** for background and periodic tasks.
+- **PostgreSQL** as the relational database.
+- Fully **dockerized** environment.
+- Scripts and `Makefile` to simplify common commands.
+- Automated tests with Django.
 
 ---
 
-## 📦 Requisitos
+## 📦 Requirements
 
 - [Docker](https://docs.docker.com/get-docker/)  
 - [Docker Compose](https://docs.docker.com/compose/)  
-- (Opcional) GNU Make
+- (Optional) GNU Make
 
 ---
 
-## ⚙️ Configuración
+## ⚙️ Setup
 
-1. Clonar el repositorio:
+1. Clone the repository:
 
    ```bash
-   git clone <url-del-repo>
+   git clone <repo-url>
    cd task-management-system
    ```
 
-2. Configurar variables de entorno:  
+2. Configure environment variables:  
 
-   Copiar el archivo de ejemplo:
+   Copy the example file:
 
    ```bash
    cp .env.sample .env
    ```
 
-   Variables relevantes:
+   Relevant variables:
 
    ```
    DJANGO_SECRET_KEY=dev-secret
@@ -63,39 +63,39 @@ Incluye autenticación mediante **JWT**, ejecución de tareas en segundo plano y
 
 ---
 
-## ▶️ Puesta en marcha
+## ▶️ Running the project
 
-Levantar servicios:
+Start services:
 
 ```bash
 docker-compose up -d --build
 ```
 
-Comprobar estado:
+Check status:
 
 ```bash
 docker-compose ps
 ```
 
-Servicios disponibles:
+Available services:
 
-- `tms_web` → API Django
+- `tms_web` → Django API
 - `tms_db` → PostgreSQL
 - `tms_redis` → Redis
 - `tms_worker` → Celery Worker
-- `tms_beat` → Celery Beat (tareas programadas)
+- `tms_beat` → Celery Beat (scheduled tasks)
 
 ---
 
-## 🔑 Autenticación
+## 🔑 Authentication
 
-Obtener token:
+Get token:
 
 ```bash
-curl -X POST http://localhost:8000/api/token/   -H "Content-Type: application/json"   -d '{"username":"usuario","password":"clave"}'
+curl -X POST http://localhost:8000/api/token/   -H "Content-Type: application/json"   -d '{"username":"user","password":"password"}'
 ```
 
-Ejemplo de respuesta:
+Example response:
 
 ```json
 {
@@ -104,7 +104,7 @@ Ejemplo de respuesta:
 }
 ```
 
-Usar el token en los endpoints protegidos:
+Use token with protected endpoints:
 
 ```bash
 curl http://localhost:8000/api/me/   -H "Authorization: Bearer <jwt-access>"
@@ -112,43 +112,43 @@ curl http://localhost:8000/api/me/   -H "Authorization: Bearer <jwt-access>"
 
 ---
 
-## 📚 Endpoints principales
+## 📚 Main Endpoints
 
-### 👤 Usuarios
+### 👤 Users
 
-- `POST /api/token/` → obtener token JWT  
-- `GET /api/me/` → usuario autenticado
+- `POST /api/token/` → obtain JWT token  
+- `GET /api/me/` → authenticated user
 
-### ✅ Tareas
+### ✅ Tasks
 
-- `POST /api/tasks/` → crear tarea  
-- `GET /api/tasks/` → listar tareas  
-- `GET /api/tasks/{id}/` → detalle  
-- `PATCH /api/tasks/{id}/` → actualizar  
-- `DELETE /api/tasks/{id}/` → eliminar  
+- `POST /api/tasks/` → create task  
+- `GET /api/tasks/` → list tasks  
+- `GET /api/tasks/{id}/` → retrieve  
+- `PATCH /api/tasks/{id}/` → update  
+- `DELETE /api/tasks/{id}/` → delete  
 
-Ejemplo:
+Example:
 
 ```bash
-curl -X POST http://localhost:8000/api/tasks/   -H "Authorization: Bearer <jwt-access>"   -H "Content-Type: application/json"   -d '{"title":"primera tarea","description":"aprender django con docker"}'
+curl -X POST http://localhost:8000/api/tasks/   -H "Authorization: Bearer <jwt-access>"   -H "Content-Type: application/json"   -d '{"title":"first task","description":"learn django with docker"}'
 ```
 
 ---
 
-## ⏱️ Tareas en segundo plano
+## ⏱️ Background Tasks
 
-El sistema incluye un ejemplo de tarea periódica:
+The system includes an example periodic task:
 
-- `apps.tasks.tasks.log_pending_tasks` → se ejecuta cada minuto y escribe en logs.
+- `apps.tasks.tasks.log_pending_tasks` → runs every minute and logs info.
 
-Ver logs:
+Check logs:
 
 ```bash
 docker-compose logs -f worker
 docker-compose logs -f beat
 ```
 
-Ejemplo manual desde shell de Django:
+Run manually from Django shell:
 
 ```bash
 docker-compose exec web python manage.py shell
@@ -166,7 +166,7 @@ uppercase_title.delay(task.id)
 
 ## 🧪 Tests
 
-Ejecutar pruebas:
+Run tests:
 
 ```bash
 docker-compose exec web python manage.py test -v 2
@@ -174,17 +174,17 @@ docker-compose exec web python manage.py test -v 2
 
 ---
 
-## 🛠️ Comandos útiles
+## 🛠️ Useful Commands
 
-Con `docker-compose`:
+With `docker-compose`:
 
 ```bash
-docker-compose up -d        # levantar
-docker-compose down         # parar
-docker-compose logs -f web  # logs de Django
+docker-compose up -d        # start
+docker-compose down         # stop
+docker-compose logs -f web  # Django logs
 ```
 
-Con `Makefile` (si está disponible):
+With `Makefile` (if available):
 
 ```bash
 make up
@@ -198,22 +198,22 @@ make testv
 ## 🩺 Troubleshooting
 
 - **relation "tasks_task" does not exist**  
-  Ejecutar migraciones:
+  Run migrations:
   ```bash
   docker-compose exec web python manage.py migrate
   ```
 
-- **Worker no procesa tareas**  
-  Asegúrate de que `tms_worker` y `tms_beat` están activos.
+- **Worker not processing tasks**  
+  Ensure `tms_worker` and `tms_beat` are running.
 
 - **JWT 401 Unauthorized**  
-  Verifica credenciales y el header:
+  Check credentials and header:
   ```
   Authorization: Bearer <access-token>
   ```
 
 ---
 
-## 📌 Notas finales
+## 📌 Final Notes
 
-Este proyecto constituye una **API backend lista para producción**, extensible con frontend en React/Vue/Angular o cualquier cliente HTTP.
+This project is a **production-ready backend API**, extendable with a frontend in React, Vue, Angular, or any HTTP client.

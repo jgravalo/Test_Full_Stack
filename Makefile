@@ -55,3 +55,12 @@ reset:
 	$(COMPOSE) up --build -d
 
 re: fclean up
+
+ls:
+	@docker ps -a
+	@echo
+	@docker images -a
+	@echo
+	@docker volume ls 
+	@echo
+	@docker network ls 
