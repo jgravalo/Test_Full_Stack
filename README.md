@@ -168,7 +168,7 @@ task = Task.objects.first()
 uppercase_title.delay(task.id)
 ```
 
-If there aren't tasks, it will shows this traceback:
+This traceback means that there are no tasks:
 
 ```shell
 Traceback (most recent call last):
